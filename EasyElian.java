@@ -1,8 +1,3 @@
-/*Todo
-	-make convert button actually work
-	-make the 2 textareas stay consistent size
-*/
-
 /*
 Created by Matthew Peyton
 2016
@@ -23,19 +18,19 @@ import java.awt.event.*;
 public class EasyElian {
 	public static void main(String [] args) throws Exception{
 	
-		//Setup the GUI
+		//Setup the main frame
 		JFrame mainFrame = new JFrame("EasyElian");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		//Setup the english pane
+		JTextArea englishField = new JTextArea("Please enter English here then click Convert.\nNewline formatting is preserved.",20,40);
+		JScrollPane englishPanel = new JScrollPane(englishField);
+		mainFrame.add(englishPanel, BorderLayout.WEST);
 		
-		JPanel englishPanel = new JPanel();
-		mainFrame.add(englishPanel, BorderLayout.LINE_START);
-		JTextArea englishField = new JTextArea("Please enter English here then click Convert.",10,5);
-		englishPanel.add(englishField);
-		
-		JPanel elianPanel = new JPanel();
-		mainFrame.add(elianPanel, BorderLayout.LINE_END);
-		JTextArea elianField = new JTextArea(10,5);
-		elianPanel.add(elianField);
+		//Set up the elian panel
+		JTextArea elianField = new JTextArea(20,40);
+		JScrollPane elianPanel = new JScrollPane(elianField);
+		mainFrame.add(elianPanel, BorderLayout.CENTER);
 		
 		//Setup the elian textarea
 		elianField.setEditable(false);
@@ -44,22 +39,25 @@ public class EasyElian {
 		File f = new File("elian_cc_variant.ttf");
 		FileInputStream in = new FileInputStream(f);
 		Font elianFont = Font.createFont(Font.TRUETYPE_FONT, in);
+		Font elianFontSized = elianFont.deriveFont(32F);
 		
-		elianField.setFont(elianFont);
+		elianField.setFont(elianFontSized);
 		
 		//Add button to translate text
 		JButton copy = new JButton( "Convert" );
 		copy.addActionListener(
          new ActionListener() {
             public void actionPerformed( ActionEvent e ) {
-               elianField.setText(englishField.getSelectedText());
+               elianField.setText(englishField.getText());
             }
          }
 		);
-		mainFrame.add(copy, BorderLayout.PAGE_END);
+		mainFrame.add(copy, BorderLayout.SOUTH);
 		
 		//Show the GUI for user interaction
-		mainFrame.pack();
+		mainFrame.setResizable(false);
+		//mainFrame.pack();
+		mainFrame.setSize(1000,500);
 		mainFrame.setVisible(true);
 	}
 }
