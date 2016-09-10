@@ -14,8 +14,13 @@ import javax.swing.*;
 import java.io.*;
 import java.util.*;
 import java.awt.event.*;
+import java.util.Timer;
 		
 public class EasyElian {
+	
+	public static JTextArea englishField;
+	public static JTextArea elianField;
+	
 	public static void main(String [] args) throws Exception{
 	
 		//Setup the main frame
@@ -23,12 +28,12 @@ public class EasyElian {
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Setup the english pane
-		JTextArea englishField = new JTextArea("Please enter English here then click Convert.\nNewline formatting is preserved.",20,40);
+		englishField = new JTextArea("Please enter English here.\nNewline formatting is preserved.",20,40);
 		JScrollPane englishPanel = new JScrollPane(englishField);
 		mainFrame.add(englishPanel, BorderLayout.WEST);
 		
 		//Set up the elian panel
-		JTextArea elianField = new JTextArea(20,40);
+		elianField = new JTextArea(20,40);
 		JScrollPane elianPanel = new JScrollPane(elianField);
 		mainFrame.add(elianPanel, BorderLayout.CENTER);
 		
@@ -43,21 +48,19 @@ public class EasyElian {
 		
 		elianField.setFont(elianFontSized);
 		
-		//Add button to translate text
-		JButton copy = new JButton( "Convert" );
-		copy.addActionListener(
-         new ActionListener() {
-            public void actionPerformed( ActionEvent e ) {
-               elianField.setText(englishField.getText());
-            }
-         }
-		);
-		mainFrame.add(copy, BorderLayout.SOUTH);
-		
 		//Show the GUI for user interaction
 		mainFrame.setResizable(false);
 		//mainFrame.pack();
 		mainFrame.setSize(1000,500);
 		mainFrame.setVisible(true);
+
+		Timer timer = new Timer();
+		timer.schedule(new RealTimeTranslate(), 0, 250);
+	}
+	
+	private static class RealTimeTranslate extends TimerTask{
+		public void run() {
+			elianField.setText(englishField.getText());
+		}
 	}
 }
