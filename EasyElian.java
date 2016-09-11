@@ -22,7 +22,7 @@ public class EasyElian {
 	public static JTextArea elianField;
 	
 	public static void main(String [] args) throws Exception{
-	
+			
 		//Setup the main frame
 		JFrame mainFrame = new JFrame("EasyElian");
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,11 +51,12 @@ public class EasyElian {
 		//Show the GUI for user interaction
 		mainFrame.setResizable(false);
 		//mainFrame.pack();
-		mainFrame.setSize(1000,500);
+		mainFrame.setSize(1500,750);
 		mainFrame.setVisible(true);
 
 		Timer timer = new Timer();
 		timer.schedule(new RealTimeTranslate(), 0, 250);
+		
 	}
 	
 	private static class RealTimeTranslate extends TimerTask{
